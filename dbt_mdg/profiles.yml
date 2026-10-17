@@ -1,0 +1,7 @@
+mdg:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('MDG_DB', '../data/mdg.duckdb') }}"
+      threads: 4

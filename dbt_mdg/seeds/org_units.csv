@@ -1,0 +1,15 @@
+org_unit,org_type,org_name,country,region,bukrs,cross_border
+IN10,plant,Pune (Chakan),IN,India,1000,true
+IN20,plant,Silvassa,IN,India,1000,false
+IN30,plant,Chennai,IN,India,1000,true
+TH10,plant,Rayong,TH,APAC,2000,true
+PL10,plant,Poznan,PL,Europe,3000,true
+DE10,plant,Neuss,DE,Europe,3100,true
+US10,plant,Columbus OH,US,Americas,4000,false
+MX10,plant,Queretaro,MX,Americas,5000,true
+1000,company_code,Company code 1000,IN,India,1000,false
+2000,company_code,Company code 2000,TH,APAC,2000,false
+3000,company_code,Company code 3000,PL,Europe,3000,false
+3100,company_code,Company code 3100,DE,Europe,3100,false
+4000,company_code,Company code 4000,US,Americas,4000,false
+5000,company_code,Company code 5000,MX,Americas,5000,false

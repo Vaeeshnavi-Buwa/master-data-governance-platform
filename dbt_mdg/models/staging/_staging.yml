@@ -1,0 +1,50 @@
+version: 2
+# Hard technical tests. These must pass - they protect every downstream number.
+models:
+  - name: stg_mara
+    columns:
+      - name: matnr
+        data_tests: [unique, not_null]
+      - name: mtart
+        data_tests:
+          - accepted_values: {arguments: {values: ['ROH', 'HALB', 'FERT', 'ERSA', 'HIBE', 'VERP']}}
+      - name: home_plant
+        data_tests:
+          - relationships: {arguments: {to: ref('org_units'), field: org_unit}}
+  - name: stg_marc
+    data_tests:
+      - unique_combination: {arguments: {columns: [matnr, werks]}}
+    columns:
+      - name: matnr
+        data_tests:
+          - not_null
+          - relationships: {arguments: {to: ref('stg_mara'), field: matnr}}
+      - name: werks
+        data_tests:
+          - relationships: {arguments: {to: ref('org_units'), field: org_unit}}
+  - name: stg_mbew
+    data_tests:
+      - unique_combination: {arguments: {columns: [matnr, werks]}}
+    columns:
+      - name: matnr
+        data_tests:
+          - relationships: {arguments: {to: ref('stg_mara'), field: matnr}}
+  - name: stg_lfa1
+    columns:
+      - name: lifnr
+        data_tests: [unique, not_null]
+  - name: stg_lfb1
+    data_tests:
+      - unique_combination: {arguments: {columns: [lifnr, bukrs]}}
+    columns:
+      - name: lifnr
+        data_tests:
+          - relationships: {arguments: {to: ref('stg_lfa1'), field: lifnr}}
+  - name: stg_er_material
+    columns:
+      - name: matnr
+        data_tests: [unique, not_null]
+  - name: stg_er_vendor
+    columns:
+      - name: lifnr
+        data_tests: [unique, not_null]

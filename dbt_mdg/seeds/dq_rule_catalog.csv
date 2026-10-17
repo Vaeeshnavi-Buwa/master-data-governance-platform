@@ -1,0 +1,27 @@
+rule_id,domain,table_name,dimension,severity,severity_weight,owner_function,description,cost_driver,detection_method
+M01,Material,MARA,Completeness,High,3,Product Data (PLM),Material group (MATKL) missing,spend_visibility,deterministic
+M02,Material,MARA,Consistency,Medium,2,Product Data (PLM),Net weight greater than gross weight,compliance_holds,deterministic
+M03,Material,MARA,Completeness,Medium,2,Product Data (PLM),Weight maintained without weight unit (GEWEI),compliance_holds,deterministic
+M04,Material,MARA,Validity,High,3,Product Data (PLM),Base unit of measure not allowed for material group,wrong_orders,deterministic
+M05,Material,MAKT,Validity,Low,1,Product Data (PLM),Description violates naming convention,none,deterministic
+M06,Material,MAKT,Completeness,High,3,Product Data (PLM),English description (SPRAS=E) missing,none,deterministic
+M07,Material,MARA,Completeness,High,3,Commercial,Finished good without product hierarchy (PRDHA),launch_delays,deterministic
+M08,Material,MARA,Validity,High,3,Commercial,Finished good EAN/GTIN missing or check digit invalid,launch_delays,deterministic
+M09,Material,MARA,Consistency,Critical,4,Finance,Flagged for deletion but stock on hand,stranded_stock,deterministic
+M10,Material,MARA,Uniqueness,Critical,4,Product Data (PLM),Duplicate material (probabilistic match),duplicate_stock,probabilistic_er
+P01,Plant,MARC,Consistency,High,3,Supply Planning,Bought-in material set to in-house production (BESKZ=E),wrong_orders,deterministic
+P02,Plant,MARC,Consistency,High,3,Supply Planning,Reorder-point MRP (VB) with reorder point = 0,stockouts,deterministic
+P03,Plant,MARC,Validity,High,3,Procurement,Planned delivery time 0 or >180 days on external procurement,wrong_orders,deterministic
+P04,Plant,MARC,Completeness,Medium,2,Supply Planning,MRP-planned material without MRP controller,wrong_orders,deterministic
+P05,Plant,MARC,Completeness,Critical,4,Trade Compliance,HS code or country of origin missing at cross-border plant,compliance_holds,deterministic
+P06,Plant,MBEW,Validity,Critical,4,Finance,Standard price = 0 with stock on hand,valuation,deterministic
+P07,Plant,MBEW,Accuracy,High,3,Finance,Price >10x or <0.1x material-group median,valuation,deterministic
+P08,Plant,MARC,Consistency,Medium,2,Supply Planning,Plant status active while cross-plant status blocked,wrong_orders,deterministic
+V01,Vendor,LFA1,Completeness,Critical,4,Indirect Tax,Indian vendor without GSTIN,gst_itc,deterministic
+V02,Vendor,LFA1,Validity,Critical,4,Indirect Tax,"GSTIN invalid (format, checksum or state mismatch)",gst_itc,deterministic
+V03,Vendor,LFA1,Validity,Medium,2,Procurement,Postal code missing or invalid for country,none,deterministic
+V04,Vendor,LFB1,Completeness,High,3,Finance,Payment terms (ZTERM) missing in company code,none,deterministic
+V05,Vendor,LFBK,Consistency,Critical,4,Finance,Bank account shared by unrelated vendors,fraud_exposure,probabilistic_er
+V06,Vendor,LFA1,Completeness,Low,1,Procurement,No phone and no email,none,deterministic
+V07,Vendor,LFA1,Uniqueness,Critical,4,Procurement,Duplicate vendor (probabilistic match),duplicate_payments,probabilistic_er
+V08,Vendor,LFA1,Consistency,Medium,2,Procurement,Posting-blocked vendor with spend in last 12 months,none,deterministic

@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+  - name: sap
+    description: >
+      Raw SAP ECC/S4 master-data extract (landing zone, parquet). Validated by the
+      Great Expectations landing gate (src/02_validate_landing_gx.py) before dbt runs.
+    meta:
+      external_location: "../data/raw/{name}.parquet"
+    tables:
+      - {name: mara, description: "General material data"}
+      - {name: marc, description: "Plant data for material (MRP, purchasing, foreign trade)"}
+      - {name: makt, description: "Material descriptions by language"}
+      - {name: mbew, description: "Material valuation (price control, standard/moving price, stock)"}
+      - {name: lfa1, description: "Vendor master - general data"}
+      - {name: lfb1, description: "Vendor master - company code data"}
+      - {name: lfbk, description: "Vendor master - bank details"}
+      - {name: usage_12m, description: "12-month consumption per material/plant (aggregate of MSEG)"}
+      - {name: vendor_spend_12m, description: "12-month PO spend per vendor/company code (aggregate of EKKO/EKPO)"}
+
+  - name: er
+    description: Outputs of the Splink entity-resolution step (src/03_entity_resolution.py)
+    meta:
+      external_location: "../data/processed/{name}.parquet"
+    tables:
+      - {name: er_material_clusters}
+      - {name: er_vendor_clusters}
+      - {name: xref_material}
+      - {name: xref_vendor}
+
+  - name: history
+    description: >
+      Defect lifecycle ledger used to BACKFILL 12 months of DQ history for this demo and to
+      verify rule recall. In production this history is produced by snapshotting
+      fct_dq_results daily (dbt snapshot) - no ledger exists in a real SAP system.
+    meta:
+      external_location: "../data/raw/{name}.parquet"
+    tables:
+      - {name: _defect_ledger}
+      - {name: _truth_material_entities, description: "Ground-truth entity per material (evaluation only)"}
+      - {name: _truth_vendor_entities, description: "Ground-truth entity per vendor (evaluation only)"}

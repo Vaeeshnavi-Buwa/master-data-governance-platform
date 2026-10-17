@@ -1,0 +1,40 @@
+name: mdg
+version: "1.0.0"
+config-version: 2
+
+flags:
+  send_anonymous_usage_stats: false
+profile: mdg
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  snapshot_date: "2026-09-27"
+  window_start: "2025-10-01"
+  program_start: "2026-04-01"
+
+models:
+  mdg:
+    staging:
+      +materialized: table   # tables, not views: the parquet paths are relative to this folder
+      +schema: staging
+    rules:
+      +materialized: table
+      +schema: dq_rules
+      +tags: ["dq_rule"]
+    marts:
+      +materialized: table
+      +schema: marts
+
+seeds:
+  mdg:
+    +schema: reference
+    india_gst_states:
+      +column_types: {gst_state_code: varchar, regio: varchar}
+    org_units:
+      +column_types: {bukrs: varchar, org_unit: varchar}

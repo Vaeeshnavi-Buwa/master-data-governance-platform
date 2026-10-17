@@ -1,0 +1,351 @@
+<title>Kestrel Master Data Scorecard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f4f6f8; --panel:#ffffff; --ink:#111827; --ink-2:#4a5565; --ink-3:#7a8494; --rule:#dde2e8; --grid:#eceff3;
+  --accent:#2a78d6; --accent-soft:#e3eefb; --s1:#2a78d6; --s2:#eb6834;
+  --good:#12805c; --warn:#b07400; --bad:#c9383a; --good-bg:#e2f3ec; --warn-bg:#fbf0d9; --bad-bg:#fbe5e5;
+  --band:#e9edf2;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --cond:"IBM Plex Sans Condensed","IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0f141b; --panel:#161c25; --ink:#eef1f5; --ink-2:#b4bdc9; --ink-3:#8791a0; --rule:#29313d; --grid:#1f2630;
+    --accent:#4b93ea; --accent-soft:#1b2a3d; --s1:#3987e5; --s2:#d95926;
+    --good:#3fbf8f; --warn:#e0a53a; --bad:#ef6b6b; --good-bg:#15322a; --warn-bg:#3a2d14; --bad-bg:#3d1b1d; --band:#1c232d;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0f141b; --panel:#161c25; --ink:#eef1f5; --ink-2:#b4bdc9; --ink-3:#8791a0; --rule:#29313d; --grid:#1f2630;
+  --accent:#4b93ea; --accent-soft:#1b2a3d; --s1:#3987e5; --s2:#d95926;
+  --good:#3fbf8f; --warn:#e0a53a; --bad:#ef6b6b; --good-bg:#15322a; --warn-bg:#3a2d14; --bad-bg:#3d1b1d; --band:#1c232d;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px;padding-block:28px 56px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--cond);font-weight:600;margin:0;text-wrap:balance;letter-spacing:-.005em}
+h1{font-size:30px;line-height:1.15}
+h2{font-size:20px}
+h3{font-size:15px}
+.eyebrow{font:500 11px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.lede{color:var(--ink-2);max-width:72ch;margin:6px 0 0}
+.mono{font-family:var(--mono);font-size:12.5px}
+.num{font-variant-numeric:tabular-nums}
+header{display:flex;flex-direction:column;gap:8px;border-bottom:1px solid var(--rule);padding-bottom:20px}
+.tables{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tables span{font:500 11.5px var(--mono);padding:2px 7px;border:1px solid var(--rule);border-radius:4px;color:var(--ink-2);background:var(--panel)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.kpi .v{font:600 30px/1.1 var(--cond);font-variant-numeric:tabular-nums}
+.kpi .d{color:var(--ink-2);font-size:12.5px}
+.delta{font:500 12px var(--mono);color:var(--good)}
+section{display:flex;flex-direction:column;gap:12px}
+.sec-head{display:flex;flex-direction:column;gap:2px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:16px;min-width:0}
+.panel h3{margin-bottom:2px}
+.panel .sub{color:var(--ink-3);font-size:12.5px;margin-bottom:10px}
+svg text{font-family:var(--sans);fill:var(--ink-3);font-size:11px}
+svg .lbl{fill:var(--ink-2);font-size:11.5px}
+svg .val{fill:var(--ink);font-weight:600;font-size:12px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink-2);margin-bottom:4px}
+.legend i{display:inline-block;width:12px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);white-space:nowrap}
+th.r,td.r{text-align:right}
+td.r,.golden td{white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--grid);vertical-align:top}
+tbody tr:hover{background:var(--accent-soft)}
+th button{all:unset;cursor:pointer}
+th button:focus-visible,.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip{display:inline-flex;align-items:center;gap:5px;font:500 11px var(--mono);padding:1px 7px;border-radius:10px;white-space:nowrap}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.sev-Critical{color:var(--bad);background:var(--bad-bg)} .sev-High{color:var(--warn);background:var(--warn-bg)}
+.sev-Medium{color:var(--ink-2);background:var(--band)} .sev-Low{color:var(--ink-3);background:var(--band)}
+.bar{height:6px;border-radius:3px;background:var(--band);position:relative;min-width:60px}
+.bar b{position:absolute;inset:0 auto 0 0;border-radius:3px;background:var(--accent)}
+.score{font-weight:600}
+.score.good{color:var(--good)} .score.warn{color:var(--warn)} .score.bad{color:var(--bad)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.seg button{all:unset;cursor:pointer;padding:4px 10px;font:500 12px var(--sans);color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.row{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.expo{display:flex;flex-direction:column;gap:0}
+.expo div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--grid)}
+.expo div:last-child{border-bottom:0}
+.note{color:var(--ink-3);font-size:12px}
+#t-rules{min-width:1180px}
+#t-rules td:nth-child(3){min-width:250px}
+.golden td:first-child{font-family:var(--mono);font-size:12.5px}
+.surv{color:var(--good);font:500 11px var(--mono)}
+.retire{color:var(--bad);font:500 11px var(--mono)}
+.er-compare{display:grid;grid-template-columns:auto 1fr 1fr;gap:6px 16px;align-items:center;font-size:13px}
+.er-compare .h{font:500 11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3)}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font:12px/1.4 var(--sans);padding:6px 9px;border-radius:6px;max-width:260px;z-index:10}
+footer{border-top:1px solid var(--rule);padding-top:16px;color:var(--ink-3);font-size:12.5px;display:flex;flex-direction:column;gap:6px}
+@media (max-width:860px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.grid2{grid-template-columns:1fr}}
+@media (max-width:420px){.kpis{grid-template-columns:1fr}h1{font-size:25px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Master data governance · snapshot <span id="snap"></span></div>
+    <h1>Kestrel Flexibles: master data scorecard</h1>
+    <p class="lede" id="lede"></p>
+    <div class="tables" id="tables"></div>
+  </header>
+
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <div class="sec-head"><div class="eyebrow">Trend</div><h2>Twelve months, before and after the governance programme</h2></div>
+    <div class="grid2">
+      <div class="panel"><h3>Weighted DQ score</h3><div class="sub">Severity-weighted mean pass rate of 26 rules. Dashed line = programme go-live, April 2026.</div><div id="c-trend"></div></div>
+      <div class="panel"><h3>Records fit for use</h3><div class="sub">Share of records with zero open defects across every rule.</div>
+        <div class="legend"><span><i style="background:var(--s1)"></i>Materials</span><span><i style="background:var(--s2)"></i>Vendors</span></div><div id="c-health"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="eyebrow">Money</div><h2>What bad master data costs per year</h2>
+      <p class="lede" id="cost-lede"></p></div>
+    <div class="grid2">
+      <div class="panel"><h3>Annual recurring cost by driver</h3><div class="sub">Bar = P50 of 20,000 Monte Carlo runs. Whisker = P10 to P90.</div><div id="c-cost"></div></div>
+      <div class="panel"><h3>One-time exposure</h3><div class="sub">Balance-sheet and control items. Reviewed, not added to the annual figure.</div><div class="expo" id="expo"></div>
+        <h3 style="margin-top:16px">Programme economics</h3><div class="expo" id="prog"></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="row"><div class="sec-head"><div class="eyebrow">Rules</div><h2>Rule catalogue</h2>
+      <p class="lede">Each rule runs in dbt at its own grain: a material, a material × plant row, a vendor, or a vendor × company code. DQ precision and recall ask whether the rule flagged the right records, checked against the generator's defect ledger. For the duplicate rules (M10, V07) they count surplus records per true entity, because which record survives is a survivorship choice. Pairwise matching accuracy is a separate metric, shown in the entity-resolution panel.</p></div>
+      <div class="seg" role="group" aria-label="Filter rules by domain" id="rule-filter"></div></div>
+    <div class="panel scroll"><table id="t-rules"></table></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="eyebrow">Accountability</div><h2>Data owners and plants</h2></div>
+    <div class="grid2">
+      <div class="panel scroll"><h3>Owner scorecard</h3><div class="sub">SLA counts cover only defects created after go-live. Legacy backlog is burned down separately.</div><table id="t-owners"></table></div>
+      <div class="panel scroll"><h3>Plant scorecard</h3><div class="sub">Material rules are charged to the plant that created the record; plant rules to the plant row.</div><table id="t-plants"></table></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><div class="eyebrow">Entity resolution</div><h2>Finding duplicates with Splink instead of fuzzy matching</h2>
+      <p class="lede">Both methods scored against known duplicate pairs. The fuzzy baseline is token-sort ratio ≥ 90 within material group or country, the usual first attempt.</p></div>
+    <div class="grid2">
+      <div class="panel"><h3>Pairwise accuracy</h3><div class="sub" id="er-sub"></div><div id="er"></div></div>
+      <div class="panel scroll"><h3>A golden record</h3><div class="sub" id="gold-sub"></div><table class="golden" id="t-gold"></table></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Kestrel Flexibles is a fictional flexible-packaging converter. All records are synthetic, generated on real SAP table structures with defects injected on purpose so every rule and model can be scored against ground truth.</div>
+    <div class="mono">Pipeline: Python generator → Great Expectations landing gate → Splink entity resolution + survivorship → dbt (DuckDB) rules, scores, trend → Monte Carlo cost model</div>
+  </footer>
+</div>
+<div id="tip" hidden></div>
+
+<script>
+const D = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const pct = (x, d = 1) => (x * 100).toFixed(d) + "%";
+const cr = x => "₹" + (x / 1e7).toFixed(x >= 1e8 ? 1 : 2) + " Cr";
+const fmt = x => Math.round(x).toLocaleString("en-IN");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const ns = "http://www.w3.org/2000/svg";
+const tip = $("#tip");
+function showTip(e, html){ tip.innerHTML = html; tip.hidden = false; const x = Math.min(e.clientX + 14, innerWidth - 270); tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px"; }
+function hideTip(){ tip.hidden = true; }
+const scoreCls = s => s >= 0.98 ? "good" : s >= 0.95 ? "warn" : "bad";
+const monthLbl = m => new Date(m + "T00:00:00").toLocaleDateString("en-GB", {month: "short"});
+
+/* header */
+$("#snap").textContent = new Date(D.meta.snapshot).toLocaleDateString("en-GB", {day: "numeric", month: "long", year: "numeric"});
+$("#lede").textContent = `${fmt(D.meta.total_records)} SAP master records across 8 plants in India, Thailand, Poland, Germany, the US and Mexico. `
+  + `The extract passed the landing gate (${D.meta.gx_checks} Great Expectations checks), was de-duplicated with Splink, and scored by 26 dbt rules owned by 7 business functions.`;
+$("#tables").innerHTML = Object.entries(D.meta.counts).map(([t, n]) => `<span>${t.toUpperCase()} ${fmt(n)}</span>`).join("");
+
+/* KPIs */
+const T = D.trend, first = T.find(r => r.m.startsWith("2026-03")) || T[0], last = T[T.length - 1];
+const H = k => D.health.filter(r => r.e === k);
+const hm = H("Material"), hv = H("Vendor");
+const hmStart = hm.find(r => r.m.startsWith("2026-03")), hmNow = hm[hm.length - 1];
+const c = D.cost.annual_recurring_cost_inr;
+$("#kpis").innerHTML = [
+  ["Weighted DQ score", pct(last.s), `<span class="delta">+${((last.s - first.s) * 100).toFixed(1)} pts</span> since go-live (${pct(first.s)})`],
+  ["Materials fit for use", pct(hmNow.r, 0), `<span class="delta">+${((hmNow.r - hmStart.r) * 100).toFixed(0)} pts</span> from ${pct(hmStart.r, 0)} in March`],
+  ["Annual cost of bad data", cr(c.p50), `P10–P90 ${cr(c.p10)} to ${cr(c.p90)}`],
+  ["Duplicate records to retire", fmt(D.er.material.golden.retired_count + D.er.vendor.golden.retired_count), `${fmt(D.er.material.golden.cluster_count + D.er.vendor.golden.cluster_count)} duplicate clusters · pair F1 ${D.er.material.pairs.pair_f1.toFixed(3)} / ${D.er.vendor.pairs.pair_f1.toFixed(3)}`],
+].map(([k, v, d]) => `<div class="kpi"><div class="eyebrow">${k}</div><div class="v">${v}</div><div class="d">${d}</div></div>`).join("");
+
+/* line chart */
+function lineChart(el, series, {min, max, fmtY, ticks = 4}){
+  const W = 520, Hh = 230, m = {l: 44, r: 64, t: 10, b: 26};
+  const xs = series[0].pts.map(p => p.m), n = xs.length;
+  const X = i => m.l + i * (W - m.l - m.r) / (n - 1);
+  const Y = v => m.t + (1 - (v - min) / (max - min)) * (Hh - m.t - m.b);
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${Hh}`); svg.setAttribute("width", "100%"); svg.setAttribute("role", "img");
+  let h = "";
+  for (let k = 0; k <= ticks; k++){ const v = min + k * (max - min) / ticks, y = Y(v);
+    h += `<line x1="${m.l}" x2="${W - m.r}" y1="${y}" y2="${y}" stroke="var(--grid)"/><text x="${m.l - 8}" y="${y + 4}" text-anchor="end">${fmtY(v)}</text>`; }
+  xs.forEach((d, i) => { if (i % 2 === 0 || i === n - 1) h += `<text x="${X(i)}" y="${Hh - 8}" text-anchor="middle">${monthLbl(d)}</text>`; });
+  const gi = xs.findIndex(d => d.startsWith("2026-04"));
+  const gx = (X(gi - 1) + X(gi)) / 2;
+  h += `<line x1="${gx}" x2="${gx}" y1="${m.t}" y2="${Hh - m.b}" stroke="var(--ink-3)" stroke-dasharray="3 3"/><text x="${gx + 5}" y="${m.t + 10}" class="lbl">go-live</text>`;
+  series.forEach(s => {
+    const d = s.pts.map((p, i) => `${i ? "L" : "M"}${X(i).toFixed(1)},${Y(p.v).toFixed(1)}`).join("");
+    h += `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round"/>`;
+    const lp = s.pts[n - 1];
+    h += `<circle cx="${X(n - 1)}" cy="${Y(lp.v)}" r="4" fill="${s.color}" stroke="var(--panel)" stroke-width="2"/>`;
+    h += `<text x="${X(n - 1) + 8}" y="${Y(lp.v) + 4}" class="val">${fmtY(lp.v, 1)}</text>`;
+  });
+  h += `<line id="xh" y1="${m.t}" y2="${Hh - m.b}" stroke="var(--ink-3)" visibility="hidden"/>`;
+  h += `<rect x="${m.l}" y="${m.t}" width="${W - m.l - m.r}" height="${Hh - m.t - m.b}" fill="transparent" class="hit"/>`;
+  svg.innerHTML = h; el.appendChild(svg);
+  const xh = svg.querySelector("#xh"), hit = svg.querySelector(".hit");
+  hit.addEventListener("mousemove", e => {
+    const r = svg.getBoundingClientRect(), vx = (e.clientX - r.left) * W / r.width;
+    const i = Math.max(0, Math.min(n - 1, Math.round((vx - m.l) / ((W - m.l - m.r) / (n - 1)))));
+    xh.setAttribute("x1", X(i)); xh.setAttribute("x2", X(i)); xh.setAttribute("visibility", "visible");
+    showTip(e, `<b>${new Date(xs[i] + "T00:00:00").toLocaleDateString("en-GB", {day: "numeric", month: "short", year: "numeric"})}</b><br>` +
+      series.map(s => `${s.name}: ${fmtY(s.pts[i].v, 1)}`).join("<br>"));
+  });
+  hit.addEventListener("mouseleave", () => { xh.setAttribute("visibility", "hidden"); hideTip(); });
+}
+lineChart($("#c-trend"), [{name: "Weighted score", color: "var(--s1)", pts: T.map(r => ({m: r.m, v: r.s}))}],
+  {min: 0.94, max: 0.98, fmtY: (v, d = 1) => (v * 100).toFixed(d) + "%"});
+lineChart($("#c-health"), [
+  {name: "Materials", color: "var(--s1)", pts: hm.map(r => ({m: r.m, v: r.r}))},
+  {name: "Vendors", color: "var(--s2)", pts: hv.map(r => ({m: r.m, v: r.r}))}],
+  {min: 0.4, max: 0.9, ticks: 5, fmtY: (v, d = 0) => (v * 100).toFixed(d) + "%"});
+
+/* cost bars with whiskers */
+(function(){
+  const rows = D.cost_driver.slice().sort((a, b) => b.p50 - a.p50);
+  const short = {"Wrong orders (MRP / purchasing data)": "Wrong orders", "Customs holds (HS code / origin / weights)": "Customs holds",
+    "Stock-outs (reorder point = 0)": "Stock-outs", "Duplicate materials: carrying + obsolescence": "Dup. materials: carrying",
+    "Launch delays & retailer chargebacks": "Launch delays", "Duplicate materials: lost price leverage": "Dup. materials: leverage",
+    "GST input-tax-credit leakage": "GST credit leakage", "Duplicate vendors: lost volume discounts": "Dup. vendors: discounts",
+    "Duplicate vendors: duplicate payments": "Dup. vendors: payments"};
+  const W = 520, rowH = 30, m = {l: 160, r: 48, t: 6, b: 22}, Hh = m.t + m.b + rows.length * rowH;
+  const max = Math.max(...rows.map(r => r.p90)) * 1.02;
+  const X = v => m.l + v / max * (W - m.l - m.r);
+  let h = "";
+  [0, 2e7, 4e7, 6e7, 8e7, 1e8].filter(v => v <= max).forEach(v => { h += `<line x1="${X(v)}" x2="${X(v)}" y1="${m.t}" y2="${Hh - m.b}" stroke="var(--grid)"/><text x="${X(v)}" y="${Hh - 6}" text-anchor="middle">${v / 1e7} Cr</text>`; });
+  rows.forEach((r, i) => {
+    const y = m.t + i * rowH + 7, bh = rowH - 14;
+    h += `<text x="${m.l - 8}" y="${y + bh / 2 + 4}" text-anchor="end" class="lbl">${esc(short[r.driver] || r.driver)}</text>`;
+    h += `<rect x="${m.l}" y="${y}" width="${Math.max(2, X(r.p50) - m.l)}" height="${bh}" rx="3" fill="var(--s1)"/>`;
+    h += `<line x1="${X(r.p10)}" x2="${X(r.p90)}" y1="${y + bh / 2}" y2="${y + bh / 2}" stroke="var(--ink-2)" stroke-width="1.5"/>`;
+    h += `<line x1="${X(r.p90)}" x2="${X(r.p90)}" y1="${y + 3}" y2="${y + bh - 3}" stroke="var(--ink-2)" stroke-width="1.5"/>`;
+    h += `<text x="${X(r.p90) + 6}" y="${y + bh / 2 + 4}" class="val">${(r.p50 / 1e7).toFixed(1)}</text>`;
+    h += `<rect x="0" y="${y - 7}" width="${W}" height="${rowH}" fill="transparent" data-i="${i}"/>`;
+  });
+  const el = $("#c-cost"), svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${Hh}`); svg.setAttribute("width", "100%"); svg.innerHTML = h; el.appendChild(svg);
+  svg.querySelectorAll("rect[data-i]").forEach(t => {
+    const r = rows[+t.dataset.i];
+    t.addEventListener("mousemove", e => showTip(e, `<b>${esc(r.driver)}</b><br>P50 ${cr(r.p50)}<br>P10 ${cr(r.p10)} · P90 ${cr(r.p90)}`));
+    t.addEventListener("mouseleave", hideTip);
+  });
+  $("#cost-lede").textContent = `Every open defect was joined to the stock, consumption, spend and trade flows it touches, then priced with ranged assumptions. `
+    + `Median ${cr(c.p50)} a year; the top three rules carry ${pct(D.cost.top3_rules_share_of_cost, 0)} of it.`;
+  const ex = D.cost.one_time_exposure_inr, names = {
+    spend_to_posting_blocked_vendors: "12-month spend with vendors now posting-blocked",
+    spend_to_vendors_sharing_bank_accounts: "Spend with vendors sharing a bank account with an unrelated vendor",
+    stranded_stock_deleted_materials: "Stock on materials flagged for deletion",
+    inventory_misvalued_price_outliers: "Inventory valued at prices 10x off the group median",
+    inventory_understated_zero_price: "Inventory carried at a standard price of zero"};
+  $("#expo").innerHTML = Object.entries(ex).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<div><span>${names[k] || k}</span><span class="num score">${cr(v)}</span></div>`).join("");
+  const P = D.cost.program;
+  $("#prog").innerHTML = [
+    ["Run cost per year (team + tooling)", cr(P.annual_cost_inr)], ["One-time build and cleansing", cr(P.one_time_cost_inr)],
+    ["Year-1 benefit, P10 to P90", `${cr(P.yr1_benefit_p10)} – ${cr(P.yr1_benefit_p90)}`],
+    ["Payback, median", `${P.payback_months_p50.toFixed(1)} months`]].map(([k, v]) => `<div><span>${k}</span><span class="num score">${v}</span></div>`).join("");
+})();
+
+/* rules table */
+let ruleDom = "All", sortKey = "annual_cost_inr", sortDir = -1;
+const doms = ["All", "Material", "Plant", "Vendor"];
+const domOf = id => ({M: "Material", P: "Plant", V: "Vendor"})[id[0]];
+$("#rule-filter").innerHTML = doms.map(d => `<button type="button" aria-pressed="${d === "All"}" data-d="${d}">${d}</button>`).join("");
+$("#rule-filter").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; ruleDom = b.dataset.d;
+  $("#rule-filter").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); renderRules(); });
+const cols = [["rule_id", "Rule"], ["table_name", "Table"], ["description", "Check"], ["severity", "Severity"], ["owner_function", "Owner"],
+  ["row_grain", "Grain"], ["failing_rows", "Failing rows", "r"], ["impacted_entities", "Entities", "r"], ["pass_rate", "Pass rate", "r"],
+  ["annual_cost_inr", "₹ / year (base)", "r"], ["dq_precision", "DQ precision", "r"], ["dq_recall", "DQ recall", "r"]];
+function renderRules(){
+  const maxC = Math.max(...D.rules.map(r => r.annual_cost_inr));
+  const rows = D.rules.filter(r => ruleDom === "All" || domOf(r.rule_id) === ruleDom)
+    .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : a[sortKey] < b[sortKey] ? -1 : 0) * sortDir);
+  const basis = r => r.metric_basis === "dup_surplus" ? ` title="Surplus records per true entity: ${fmt(r.correct)} correct of ${fmt(r.flagged)} flagged, ${fmt(r.expected_defects)} expected"`
+                                                     : ` title="Ledger keys: ${fmt(r.correct)} correct of ${fmt(r.flagged)} flagged, ${fmt(r.expected_defects)} expected"`;
+  $("#t-rules").innerHTML = `<thead><tr>${cols.map(([k, l, a]) => `<th class="${a || ""}"><button type="button" data-k="${k}">${l}${k === sortKey ? (sortDir < 0 ? " ↓" : " ↑") : ""}</button></th>`).join("")}</tr></thead><tbody>` +
+    rows.map(r => `<tr><td class="mono">${r.rule_id}</td><td class="mono">${r.table_name}</td><td>${esc(r.description)}</td>
+      <td><span class="chip sev-${r.severity}">${r.severity}</span></td><td>${esc(r.owner_function)}</td>
+      <td class="note" style="white-space:nowrap">${r.row_grain}</td>
+      <td class="r num">${fmt(r.failing_rows)}</td><td class="r num">${fmt(r.impacted_entities)}</td>
+      <td class="r num"><span class="score ${scoreCls(r.pass_rate)}">${pct(r.pass_rate)}</span></td>
+      <td class="r num"><div style="display:flex;gap:8px;align-items:center;justify-content:flex-end">${r.annual_cost_inr ? cr(r.annual_cost_inr) : "—"}<div class="bar" style="width:50px"><b style="width:${r.annual_cost_inr / maxC * 100}%"></b></div></div></td>
+      <td class="r num"${basis(r)}>${pct(r.dq_precision)}${r.metric_basis === "dup_surplus" ? "*" : ""}</td>
+      <td class="r num"${basis(r)}>${pct(r.dq_recall)}${r.metric_basis === "dup_surplus" ? "*" : ""}</td></tr>`).join("") +
+    `<tr><td colspan="12" class="note">* Duplicate rules: counted as surplus records per true entity, not as record pairs. Hover a value for its counts.</td></tr></tbody>`;
+}
+$("#t-rules").addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b) return;
+  const k = b.dataset.k; sortDir = k === sortKey ? -sortDir : -1; sortKey = k; renderRules(); });
+renderRules();
+
+/* owners */
+$("#t-owners").innerHTML = `<thead><tr><th>Owner</th><th class="r">Score</th><th class="r">Legacy open</th><th class="r">New open</th><th class="r">New past SLA</th></tr></thead><tbody>` +
+  D.owners.map(o => `<tr><td>${esc(o.owner)}<div class="note">${esc(o.role)}</div></td><td class="r num"><span class="score ${scoreCls(o.s)}">${pct(o.s)}</span></td>
+    <td class="r num">${fmt(o.legacy)}</td><td class="r num">${fmt(o.new_open)}</td><td class="r num">${fmt(o.new_breached)}</td></tr>`).join("") + "</tbody>";
+
+/* plants */
+(function(){
+  const plants = Object.keys(D.meta.plants), costOrg = Object.fromEntries(D.cost_org.map(r => [r.org_unit, r.annual_cost_inr]));
+  const get = (p, d) => D.heat.find(r => r.org === p && r.domain === d) || {};
+  const rows = plants.map(p => ({p, name: D.meta.plants[p], m: get(p, "Material").s, pl: get(p, "Plant").s, cost: costOrg[p] || 0})).sort((a, b) => b.cost - a.cost);
+  const maxC = Math.max(...rows.map(r => r.cost));
+  $("#t-plants").innerHTML = `<thead><tr><th>Plant</th><th class="r">Material rules</th><th class="r">Plant rules</th><th class="r">₹ / year</th></tr></thead><tbody>` +
+    rows.map(r => `<tr><td><span class="mono">${r.p}</span> ${esc(r.name)}</td><td class="r num"><span class="score ${scoreCls(r.m)}">${pct(r.m)}</span></td>
+      <td class="r num"><span class="score ${scoreCls(r.pl)}">${pct(r.pl)}</span></td>
+      <td class="r num"><div style="display:flex;gap:8px;align-items:center;justify-content:flex-end">${cr(r.cost)}<div class="bar" style="width:50px"><b style="width:${r.cost / maxC * 100}%"></b></div></div></td></tr>`).join("") + "</tbody>";
+})();
+
+/* ER */
+(function(){
+  const E = D.er;
+  $("#er-sub").textContent = `Pair metrics: every pair the model calls the same entity, against the ${fmt(E.material.pairs.true_pairs)} material and ${fmt(E.vendor.pairs.true_pairs)} vendor pairs that truly are.`;
+  const line = (lbl, a, b, f) => `<div>${lbl}</div><div class="num">${f(a)}</div><div class="num">${f(b)}</div>`;
+  const block = (dom, e) => `<div class="h" style="grid-column:1/-1;margin-top:8px">${dom}</div><div class="h"></div><div class="h">Splink</div><div class="h">Fuzzy ≥ 90</div>` +
+    line("Pairs flagged", e.pairs.pred_pairs, e.baseline_fuzzy90.pred_pairs, fmt) +
+    line("Pair TP / FP / FN", `${fmt(e.pairs.pair_tp)} / ${fmt(e.pairs.pair_fp)} / ${fmt(e.pairs.pair_fn)}`, `${fmt(e.baseline_fuzzy90.tp)} / ${fmt(e.baseline_fuzzy90.fp)} / ${fmt(e.baseline_fuzzy90.fn)}`, x => x) +
+    line("Pair precision", e.pairs.pair_precision, e.baseline_fuzzy90.precision, x => pct(x)) +
+    line("Pair recall", e.pairs.pair_recall, e.baseline_fuzzy90.recall, x => pct(x)) +
+    line("Pair F1", e.pairs.pair_f1, e.baseline_fuzzy90.f1, x => x.toFixed(3));
+  const gold = (dom, g) => `<div><span>${dom}: duplicate clusters</span><span class="num score">${fmt(g.cluster_count)}</span></div>
+    <div><span>${dom}: survivors kept</span><span class="num score">${fmt(g.survivor_count)}</span></div>
+    <div><span>${dom}: records to retire</span><span class="num score">${fmt(g.retired_count)}</span></div>`;
+  $("#er").innerHTML = `<div class="er-compare">${block("Materials", E.material)}${block("Vendors", E.vendor)}</div>
+    <p class="note" style="margin-top:12px">Fuzzy matching on descriptions flags ${fmt(E.material.baseline_fuzzy90.pred_pairs)} material pairs, mostly look-alikes that differ in the spec that matters (20 vs 25 micron, IPA vs NPA). Splink weighs each field separately and learns that a different number is strong evidence of a different material.
+    Steward review queue: ${E.material.bands.steward_review_pairs} material and ${E.vendor.bands.steward_review_pairs} vendor pairs.</p>
+    <h3 style="margin-top:14px">Golden-record output</h3><div class="expo">${gold("Materials", E.material.golden)}${gold("Vendors", E.vendor.golden)}</div>`;
+  const g = D.golden_material;
+  $("#gold-sub").textContent = `Cluster ${g.head.golden_id}: ${g.head.members} records, ₹${fmt(g.head.total_stock_value)} of stock, plants ${g.head.plants_union}.`;
+  $("#t-gold").innerHTML = `<thead><tr><th>MATNR</th><th>Description as typed</th><th>Plant</th><th>Created</th><th>Action</th></tr></thead><tbody>` +
+    g.members.map(r => `<tr><td>${r.matnr}</td><td class="mono">${esc(r.maktx ?? "(no English text)")}</td><td class="mono">${r.home_plant}</td><td class="num">${r.created}</td>
+      <td>${r.is_survivor ? '<span class="surv">SURVIVOR</span>' : '<span class="retire">RETIRE → MERGE</span>'}</td></tr>`).join("") +
+    `<tr><td colspan="5"><span class="eyebrow">Golden description</span> <span class="mono">${esc(g.head.MAKTX)}</span></td></tr></tbody>`;
+})();
+</script>

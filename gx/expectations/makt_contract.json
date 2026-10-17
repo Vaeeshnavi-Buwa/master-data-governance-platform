@@ -1,0 +1,55 @@
+{
+  "expectations": [
+    {
+      "id": "9a260588-6386-4d60-9589-ed7f2ad2b014",
+      "kwargs": {
+        "column_list": [
+          "MATNR",
+          "SPRAS"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_compound_columns_to_be_unique"
+    },
+    {
+      "id": "462f05de-a6bc-4823-b359-62e65aa3d2f6",
+      "kwargs": {
+        "column": "SPRAS",
+        "value_set": [
+          "E",
+          "D",
+          "L",
+          "2",
+          "S"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_in_set"
+    },
+    {
+      "id": "4d08e37b-b338-4d87-ab9e-1b93bd2c78f0",
+      "kwargs": {
+        "column": "MAKTX",
+        "max_value": 40,
+        "min_value": 1
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_value_lengths_to_be_between"
+    }
+  ],
+  "id": "b020a44b-838d-41b1-b26f-158a16a098d4",
+  "meta": {
+    "great_expectations_version": "1.23.2"
+  },
+  "name": "makt_contract",
+  "notes": null
+}

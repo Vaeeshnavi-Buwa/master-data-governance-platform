@@ -1,0 +1,22 @@
+{
+  "data": {
+    "asset": {
+      "id": "796f177a-b028-4612-9c9d-dfa90937b54a",
+      "name": "makt"
+    },
+    "batch_definition": {
+      "id": "79fc8ac2-a75c-4af2-be21-25bb359103de",
+      "name": "full_extract"
+    },
+    "datasource": {
+      "id": "22995175-0728-432d-a1e3-b892d9bf2587",
+      "name": "sap_landing"
+    }
+  },
+  "id": "fa9f3bc9-4084-495d-b845-956582e5f931",
+  "name": "makt_landing",
+  "suite": {
+    "id": "b020a44b-838d-41b1-b26f-158a16a098d4",
+    "name": "makt_contract"
+  }
+}

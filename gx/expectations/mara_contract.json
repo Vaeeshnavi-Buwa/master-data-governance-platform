@@ -1,0 +1,133 @@
+{
+  "expectations": [
+    {
+      "id": "bb580387-c9aa-4e18-9ff7-86237e370cbf",
+      "kwargs": {
+        "column": "MATNR"
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "6d3202bc-10de-4886-83c5-9710befaa084",
+      "kwargs": {
+        "column": "MATNR"
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_unique"
+    },
+    {
+      "id": "4a0b5399-6892-4b7b-bb1c-e1f6ecb83bde",
+      "kwargs": {
+        "column": "MATNR",
+        "regex": "^\\d{8}$"
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_match_regex"
+    },
+    {
+      "id": "230d44af-dbbb-4f7e-b824-a3da86cc481d",
+      "kwargs": {
+        "column": "MTART",
+        "value_set": [
+          "ROH",
+          "HALB",
+          "FERT",
+          "ERSA",
+          "HIBE",
+          "VERP"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_in_set"
+    },
+    {
+      "id": "08b1cdd2-b496-4ebd-8097-e086edce9b25",
+      "kwargs": {
+        "column": "ERSDA"
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "c87b85db-b4a2-44b0-8a73-9e63d2c2fb4d",
+      "kwargs": {
+        "column": "MEINS",
+        "value_set": [
+          "EA",
+          "KG",
+          "M",
+          "L",
+          "M2",
+          "PAK",
+          "TH",
+          "SET",
+          "ROL"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_in_set"
+    },
+    {
+      "id": "de17cce9-9259-4a1a-a311-a51a98183eac",
+      "kwargs": {
+        "max_value": 80000,
+        "min_value": 30000
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_table_row_count_to_be_between"
+    },
+    {
+      "id": "6e1064b3-88ef-4cbe-9780-e44ceb8eb5aa",
+      "kwargs": {
+        "column": "BRGEW",
+        "max_value": 5000.0,
+        "min_value": 0.0
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "4f3f0abf-73c9-432c-adfa-ec56cc98da4f",
+      "kwargs": {
+        "column": "MATKL",
+        "mostly": 0.97
+      },
+      "meta": {
+        "severity": "soft"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_not_be_null"
+    }
+  ],
+  "id": "b88583a5-fb4e-445f-8b4e-a3f35fe26022",
+  "meta": {
+    "great_expectations_version": "1.23.2"
+  },
+  "name": "mara_contract",
+  "notes": null
+}

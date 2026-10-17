@@ -1,0 +1,79 @@
+{
+  "expectations": [
+    {
+      "id": "49918584-ffed-4756-a8ab-408f4f39fe2b",
+      "kwargs": {
+        "column": "LIFNR"
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_unique"
+    },
+    {
+      "id": "25192028-72a3-4ba1-bed9-2759f27fc127",
+      "kwargs": {
+        "column": "NAME1"
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "414aa6f5-376a-4361-b4c5-7123ea8a9f6c",
+      "kwargs": {
+        "column": "LAND1",
+        "value_set": [
+          "US",
+          "DE",
+          "IN",
+          "TH",
+          "PL",
+          "MX"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_in_set"
+    },
+    {
+      "id": "b4e09949-a541-48d9-83e6-07f7a4304030",
+      "kwargs": {
+        "column": "KTOKK",
+        "value_set": [
+          "ZDOM",
+          "ZIMP"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_in_set"
+    },
+    {
+      "id": "f795b9fd-cd9f-4434-9a3e-cc727e476c6a",
+      "kwargs": {
+        "column": "STCD3",
+        "mostly": 0.97,
+        "regex": "^\\d{2}[A-Z]{5}\\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]$"
+      },
+      "meta": {
+        "severity": "soft"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_match_regex"
+    }
+  ],
+  "id": "44e3c0d1-3f49-48c5-8e38-c654564000a7",
+  "meta": {
+    "great_expectations_version": "1.23.2"
+  },
+  "name": "lfa1_contract",
+  "notes": null
+}

@@ -1,0 +1,22 @@
+{
+  "data": {
+    "asset": {
+      "id": "456a51ac-439c-46ad-b52a-98f3ff30c482",
+      "name": "mara"
+    },
+    "batch_definition": {
+      "id": "256060a3-40ce-47a2-bd65-326302711a01",
+      "name": "full_extract"
+    },
+    "datasource": {
+      "id": "22995175-0728-432d-a1e3-b892d9bf2587",
+      "name": "sap_landing"
+    }
+  },
+  "id": "f20683a3-daba-459b-86f5-5706e19ae2b2",
+  "name": "mara_landing",
+  "suite": {
+    "id": "b88583a5-fb4e-445f-8b4e-a3f35fe26022",
+    "name": "mara_contract"
+  }
+}

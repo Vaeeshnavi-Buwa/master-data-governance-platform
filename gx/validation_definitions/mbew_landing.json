@@ -1,0 +1,22 @@
+{
+  "data": {
+    "asset": {
+      "id": "7245919f-bb6e-48c3-9b76-f0568c9153cd",
+      "name": "mbew"
+    },
+    "batch_definition": {
+      "id": "6e9e44e1-00da-42dc-ba3d-c4172d635b93",
+      "name": "full_extract"
+    },
+    "datasource": {
+      "id": "22995175-0728-432d-a1e3-b892d9bf2587",
+      "name": "sap_landing"
+    }
+  },
+  "id": "10a0103b-1933-458b-bd24-e88017d37201",
+  "name": "mbew_landing",
+  "suite": {
+    "id": "f4b85dc5-fc30-4cfe-8a18-aa45fb3b51ad",
+    "name": "mbew_contract"
+  }
+}

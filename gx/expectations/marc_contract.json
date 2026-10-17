@@ -1,0 +1,94 @@
+{
+  "expectations": [
+    {
+      "id": "b0559888-8784-45dc-9fa9-90bed8340b32",
+      "kwargs": {
+        "column_list": [
+          "MATNR",
+          "WERKS"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_compound_columns_to_be_unique"
+    },
+    {
+      "id": "6bca0249-d0b2-4a36-aabb-b73ce4276e5e",
+      "kwargs": {
+        "column": "WERKS",
+        "value_set": [
+          "IN10",
+          "IN20",
+          "IN30",
+          "TH10",
+          "PL10",
+          "DE10",
+          "US10",
+          "MX10"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_in_set"
+    },
+    {
+      "id": "9b9a5881-83a0-4404-9a18-2cd8c2d3499e",
+      "kwargs": {
+        "column": "DISMM",
+        "value_set": [
+          "PD",
+          "VB",
+          "ND"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_in_set"
+    },
+    {
+      "id": "da06baf6-c83c-4723-a493-fa517f182cd8",
+      "kwargs": {
+        "column": "BESKZ",
+        "value_set": [
+          "E",
+          "F",
+          "X"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_in_set"
+    },
+    {
+      "id": "0d045680-4e76-416c-9ebe-3a2a5baa8862",
+      "kwargs": {
+        "column": "DISPO",
+        "condition_parser": "pandas",
+        "mostly": 0.95,
+        "row_condition": {
+          "pass_through_filter": "DISMM!=\"ND\"",
+          "type": "pass_through"
+        }
+      },
+      "meta": {
+        "severity": "soft"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_not_be_null"
+    }
+  ],
+  "id": "e8fcbdc8-33e4-4928-8a32-3302f185387c",
+  "meta": {
+    "great_expectations_version": "1.23.2"
+  },
+  "name": "marc_contract",
+  "notes": null
+}

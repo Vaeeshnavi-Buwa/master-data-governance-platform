@@ -1,0 +1,33 @@
+{
+  "expectations": [
+    {
+      "id": "299e2ece-9722-413f-a236-c362981d86c4",
+      "kwargs": {
+        "column": "LIFNR"
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "9e1bc293-e87a-4358-9bab-1c56c2e3d9e5",
+      "kwargs": {
+        "column": "BANKN",
+        "regex": "^\\d{6,18}$"
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_match_regex"
+    }
+  ],
+  "id": "364f19d1-b3c7-4c3d-8c3c-16d3c012307b",
+  "meta": {
+    "great_expectations_version": "1.23.2"
+  },
+  "name": "lfbk_contract",
+  "notes": null
+}

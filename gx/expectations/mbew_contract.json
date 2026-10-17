@@ -1,0 +1,76 @@
+{
+  "expectations": [
+    {
+      "id": "89f7ba74-991d-49d4-97cc-ab2e66572df6",
+      "kwargs": {
+        "column_list": [
+          "MATNR",
+          "BWKEY"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_compound_columns_to_be_unique"
+    },
+    {
+      "id": "b8d62212-2005-4b7d-b1e4-b2ec74730c0b",
+      "kwargs": {
+        "column": "VPRSV",
+        "value_set": [
+          "S",
+          "V"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_in_set"
+    },
+    {
+      "id": "24c5ca1c-ba0c-4ba4-9294-1d8a02cccd9a",
+      "kwargs": {
+        "column": "LBKUM",
+        "min_value": 0.0
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "5ae322f1-12bb-4136-92f5-17d7307ee936",
+      "kwargs": {
+        "column": "STPRS",
+        "min_value": 0.0
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_between"
+    },
+    {
+      "id": "acf26a15-f6e3-46ea-895b-7b159adc49ba",
+      "kwargs": {
+        "column": "SALK3",
+        "max_value": 9000000000.0,
+        "min_value": 4000000000.0
+      },
+      "meta": {
+        "severity": "soft"
+      },
+      "severity": "critical",
+      "type": "expect_column_sum_to_be_between"
+    }
+  ],
+  "id": "f4b85dc5-fc30-4cfe-8a18-aa45fb3b51ad",
+  "meta": {
+    "great_expectations_version": "1.23.2"
+  },
+  "name": "mbew_contract",
+  "notes": null
+}

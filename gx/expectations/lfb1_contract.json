@@ -1,0 +1,55 @@
+{
+  "expectations": [
+    {
+      "id": "36237566-72aa-49e6-a11b-4ae8eb5804ab",
+      "kwargs": {
+        "column_list": [
+          "LIFNR",
+          "BUKRS"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_compound_columns_to_be_unique"
+    },
+    {
+      "id": "e366a8e5-a734-44ec-be86-b606c612c912",
+      "kwargs": {
+        "column": "BUKRS",
+        "value_set": [
+          "1000",
+          "2000",
+          "3000",
+          "3100",
+          "4000",
+          "5000"
+        ]
+      },
+      "meta": {
+        "severity": "hard"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_be_in_set"
+    },
+    {
+      "id": "df25875e-8090-4997-ae4d-633dab38e281",
+      "kwargs": {
+        "column": "ZTERM",
+        "mostly": 0.98
+      },
+      "meta": {
+        "severity": "soft"
+      },
+      "severity": "critical",
+      "type": "expect_column_values_to_not_be_null"
+    }
+  ],
+  "id": "343a115e-889a-4933-abed-dfe6e8efde5d",
+  "meta": {
+    "great_expectations_version": "1.23.2"
+  },
+  "name": "lfb1_contract",
+  "notes": null
+}

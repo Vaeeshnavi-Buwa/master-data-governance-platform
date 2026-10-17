@@ -1,0 +1,22 @@
+{
+  "data": {
+    "asset": {
+      "id": "21287895-3d2a-48e4-957a-0162b2b82632",
+      "name": "lfbk"
+    },
+    "batch_definition": {
+      "id": "ac09966f-b030-4969-886a-8fd3472171f4",
+      "name": "full_extract"
+    },
+    "datasource": {
+      "id": "22995175-0728-432d-a1e3-b892d9bf2587",
+      "name": "sap_landing"
+    }
+  },
+  "id": "820b77e9-f2ee-43b3-85e4-fcb2b8511d03",
+  "name": "lfbk_landing",
+  "suite": {
+    "id": "364f19d1-b3c7-4c3d-8c3c-16d3c012307b",
+    "name": "lfbk_contract"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "data": {
+    "asset": {
+      "id": "f8084ec1-c540-45bd-a658-2927ed5abd90",
+      "name": "lfa1"
+    },
+    "batch_definition": {
+      "id": "82ec9a4d-fe83-4c03-af43-d56c301ea7c2",
+      "name": "full_extract"
+    },
+    "datasource": {
+      "id": "22995175-0728-432d-a1e3-b892d9bf2587",
+      "name": "sap_landing"
+    }
+  },
+  "id": "f7897198-50d4-4454-a0f5-435773736e26",
+  "name": "lfa1_landing",
+  "suite": {
+    "id": "44e3c0d1-3f49-48c5-8e38-c654564000a7",
+    "name": "lfa1_contract"
+  }
+}

@@ -13,6 +13,8 @@ I work with this kind of data in my job, so I wanted to build something that:
 
 **Live dashboard:** [open here](https://vaeeshnavi-buwa.github.io/master-data-governance-platform/dashboard/standalone.html)
 
+![Dashboard overview](images/overview.png)
+
 ## The data
 
 Real company data can't be shared, so I created my own. I wrote a Python script that builds a realistic SAP extract for a made-up packaging company called Kestrel Flexibles:
@@ -85,6 +87,8 @@ One thing surprised me. At first I included weight and unit of measure in the mo
 - 2,282 groups of duplicate materials merged into one clean record each
 - ₹10.6 Cr of stock was sitting on duplicate material codes
 
+![Splink vs fuzzy matching, and an example of three records merged into one](images/matching.png)
+
 **Data quality** (the made-up company "fixes" its data from April 2026)
 
 | | March 2026 | September 2026 |
@@ -97,6 +101,8 @@ One thing surprised me. At first I included weight and unit of measure in the mo
 
 - Estimated cost of bad master data: about **₹25 Cr a year** (likely range ₹20 Cr to ₹33 Cr)
 - Just 3 rules cause almost half of that cost: missing customs (HS) codes, duplicate materials and reorder points set to zero
+
+![Cost of bad master data by cause](images/cost.png)
 
 **Checking the checks**
 23 of the 26 rules caught every planted mistake and flagged nothing wrongly. That's only possible because I planted the mistakes myself, so on real data I would expect lower numbers.
@@ -138,6 +144,7 @@ It takes about 3 minutes. Then open `dashboard/standalone.html` in your browser.
 | `gx/` | Great Expectations checks |
 | `config/cost_assumptions.yaml` | low, likely and high cost for each type of mistake |
 | `dashboard/` | the dashboard |
+| `images/` | screenshots used in this README |
 | `docs/01_governance_operating_model.md` | who owns which data, deadlines, escalation |
 | `docs/02_data_dictionary.md` | every table and field used |
 

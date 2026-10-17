@@ -1,0 +1,52 @@
+# Cost-of-poor-data-quality assumptions.  low / base / high feed a triangular
+# Monte Carlo.  These are PLANNING assumptions for a ~Rs 5,000 Cr flexible-packaging
+# converter - replace each with your own actuals (finance, logistics, EXIM, tax teams)
+# before quoting the numbers to anyone. Every line says who should own the number.
+
+currency: INR
+program:
+  annual_cost_inr: 17700000          # 1 MDM lead (45L) + 8 plant stewards @50% (56L) + 3 analysts (36L) + tooling/cloud (40L)
+  one_time_cost_inr: 30000000        # create-workflow build, cleansing sprint, change management
+  share_of_recurring_cost_removed_yr1: {low: 0.30, base: 0.45, high: 0.60}   # not all of it is avoidable, and it ramps
+
+duplicate_materials:                  # owner: Supply Chain Finance
+  carrying_cost_rate:        {low: 0.15, base: 0.20, high: 0.25}   # % of inventory value per year
+  excess_share_of_dup_stock: {low: 0.30, base: 0.50, high: 0.70}   # part of duplicate stock that is pure buffer
+  annual_obsolescence_rate:  {low: 0.05, base: 0.10, high: 0.15}   # duplicates age out: nobody knows they exist
+  price_leverage_lost:       {low: 0.005, base: 0.015, high: 0.03} # fragmented volume on duplicate SKUs
+
+duplicate_vendors:                    # owner: Accounts Payable / Procurement
+  duplicate_payment_rate:    {low: 0.0002, base: 0.0005, high: 0.001}  # of spend through duplicated vendors
+  volume_discount_lost:      {low: 0.005, base: 0.01, high: 0.02}      # of spend on the duplicate record
+
+wrong_orders:                         # owner: Supply Planning
+  incidents_per_affected_item_yr: {low: 0.5, base: 1, high: 2}
+  cost_per_incident_inr:          {low: 6000, base: 12000, high: 25000}  # expedite freight + planner hours + premium
+
+stockouts:                            # owner: Plant Operations
+  stockout_probability_yr:  {low: 0.20, base: 0.35, high: 0.50}
+  share_stockouts_stopping_line: {low: 0.10, base: 0.20, high: 0.30}   # most shortages are worked around
+  line_down_hours:          {low: 2, base: 4, high: 8}
+  contribution_per_line_hour_inr: {low: 60000, base: 100000, high: 150000}
+
+compliance_holds:                     # owner: EXIM / Trade Compliance
+  share_items_crossing_border: {low: 0.20, base: 0.35, high: 0.50}  # not every item at an EXIM plant is traded
+  shipments_per_item_yr:    {low: 2, base: 4, high: 8}
+  hold_probability:         {low: 0.10, base: 0.20, high: 0.30}
+  hold_days:                {low: 2, base: 3, high: 5}
+  demurrage_per_day_inr:    {low: 15000, base: 25000, high: 40000}
+  broker_rework_inr:        {low: 5000, base: 10000, high: 20000}
+  weight_error_hold_factor: {low: 0.1, base: 0.25, high: 0.4}   # weight defects cause fewer holds than missing HS codes
+
+gst_itc:                              # owner: Indirect Tax
+  gst_rate: 0.18
+  itc_permanently_lost:     {low: 0.02, base: 0.05, high: 0.10}  # share of ITC never recovered (2B mismatch, time-bar)
+  delay_months:             {low: 1, base: 2, high: 4}
+  cost_of_capital:          {low: 0.09, base: 0.11, high: 0.13}
+
+launch_delays:                        # owner: Commercial / NPD
+  new_sku_window_days: 180
+  delay_days:               {low: 2, base: 5, high: 10}
+  new_sku_annual_revenue_inr: {low: 15000000, base: 40000000, high: 80000000}
+  contribution_margin:      {low: 0.20, base: 0.25, high: 0.30}
+  retailer_chargeback_per_bad_ean_yr: {low: 5000, base: 15000, high: 40000}

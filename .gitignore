@@ -1,0 +1,9 @@
+data/
+dbt_mdg/target/
+dbt_mdg/logs/
+logs/
+gx/uncommitted/
+__pycache__/
+*.duckdb*
+.venv/
+.tmp/
